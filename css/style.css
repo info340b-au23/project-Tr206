@@ -33,6 +33,7 @@ h2 {
     justify-content: center;
 }
 
+
 h3 {
     font-family: Arial, sans-serif;
     font-size: 0.8rem;
@@ -98,6 +99,7 @@ nav ul li img {
     margin-right: 0.5em;
     filter: invert(100%);
 }
+
 
 nav ul li a:hover {
     color: white;
@@ -178,6 +180,10 @@ footer p:last-child {
     margin-bottom: 4rem;
     margin-top: 3rem;
     display: block;
+}
+.health-checker-link {
+    color: white;  
+    text-decoration: none;
 }
 
 .next {
