@@ -3,12 +3,12 @@
 }
 
 body {
-    font-family: 'Nunito Sans', Arial, sans-serif;
+    font-family: 'Optima', Garamond, sans-serif;
     font-size: 16px;
 }
 
 h1 { 
-    font-family: 'Raleway', Helvetica, sans-serif;
+    font-family: 'Optima', Helvetica, sans-serif;
     font-size: 3.5rem;
     font-weight: 300;
     margin-top: 0;
@@ -72,7 +72,7 @@ header {
 }
 
 footer {
-    background-color: #3e1305;
+    background-color: #59745D;
     color: white;
 }
 
