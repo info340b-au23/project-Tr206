@@ -76,6 +76,20 @@ nav ul li {
     padding: 0;
 }
 
+
+.square-card {
+    height: 100%;
+}
+
+.center-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+
 nav ul li a {
     color: white;
     text-decoration: none;
