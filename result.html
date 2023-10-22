@@ -4,11 +4,9 @@
 <head>
     <link rel="stylesheet" href="css/style.css">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Health Checker</title>
-    <meta name="author" content="Tyler Ramos, Morgan Weber, Qiulin Qu, Sanika Gadam">
+    <meta name="author" content="Tyler Ramos, Morgan Weber, Qiulin qu, Sanika Gadam">
     <meta name="description" content="This page will be a static mock up of our project">
-    <link rel="stylesheet" href="zz.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
 
@@ -20,7 +18,7 @@
 <body>
     <nav>
         <ul>
-            <li><a href="#quiz"><img src="img/quiz.png" alt="Quiz Icon">Symptom Quiz</a></li>
+            <li><a href="symptom-1.html"><img src="img/quiz.png" alt="Quiz Icon">Symptom Quiz</a></li>
             <li><a href="#location"><img src="img/location.png" alt="Location Icon">Find a Treatment Center Near you</a>
             </li>
             <li><a href="#diary"><img src="img/diary.png" alt="Diary Icon">Diary</a></li>
@@ -30,27 +28,32 @@
 
     <header>
         <div class="container">
-            <a href="index.html">
-                <h1 class="health-checker-link">Health Checker</h1>
-            </a>
+            <h1>Health Checker</h1>
         </div>
     </header>
-    <div id="header">
-        <img src="img/checker.png" alt="image" class="checker-img">
-        <h2>What symptoms do you have?</h2>
-    </div>
 
-    <div>
-        <input type="text" id="symptom-input" placeholder="Enter symptom">
-    </div>
+    <div class="row">
+        <!-- left -->
+        <div class="d-flex col-md-6 mb-4">
+            <div class="card h-100 w-100 mb-4">
+                <div class="card-body d-flex flex-column">
+                    <h2 class="card-title">Possible Result</h2>
+                    <p class="card-text">Patient's condition: Placeholder text</p>
+                    <p class="card-text">Medicine Recommendation: Placeholder text</p>
+                </div>
+            </div>
+        </div>
 
-    <div>
-        <a href="age.html">
-            <button class="next">Next</button>
-        </a>
+        <!-- right -->
+        <div class="d-flex col-md-6 mb-4">
+            <div class="card h-100 w-100 mb-4">
+                <div class="card-body d-flex flex-column">
+                    <h2 class="card-title">Need to find nearby hospital?</h2>
+                    <a href="#" class="btn btn-dark">Find Hospital</a>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div id="symptom-list"></div>
 
     <footer class="fixed-bottom">
         <div class="container">
