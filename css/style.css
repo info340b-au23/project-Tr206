@@ -56,6 +56,13 @@ nav ul li {
     padding: 0;
 }
 
+nav ul li img {
+    height: 1em; 
+    vertical-align: middle;
+    margin-right: 0.5em;
+    filter: invert(100%); 
+}
+
 nav ul li a:hover {
     color: black;
     border-bottom: 0.8rem solid #f0f0f0;
