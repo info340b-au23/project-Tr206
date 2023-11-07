@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Use Hospita general information.csv from this link https://data.cms.gov/provider-data/topics/hospitals-->
-
 <head>
     <link rel="stylesheet" href="css/style.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Hospital Search</title>
+    <title>Health Checker</title>
     <meta name="author" content="Tyler Ramos, Morgan Weber, Qiulin Qu, Sanika Gadam">
     <meta name="description" content="This page will be a static mock up of our project">
+    <link rel="stylesheet" href="zz.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
 
@@ -23,7 +22,7 @@
         <ul>
             <li><a href="symptom-1.html"><img src="img/quiz.png" alt="Quiz Icon">Symptom Quiz</a></li>
             <li><a href="hospital.html"><img src="img/location.png" alt="Location Icon">Find a Treatment Center Near you</a></li>
-            <li><a href="#diary"><img src="img/diary_2.png" alt="Diary Icon">Diary</a></li>
+            <li><a href="#diary"><img src="img/diary.png" alt="Diary Icon">Diary</a></li>
             <li><a href="#profile"><img src="img/profile.png" alt="Profile Icon">Profile</a></li>
         </ul>
     </nav>
@@ -31,34 +30,26 @@
     <header>
         <div class="container">
             <a href="index.html">
-                <h1 class="health-checker-link">Find a Treatment Center!</h1>
+                <h1 class="health-checker-link">Health Checker</h1>
             </a>
         </div>
     </header>
     <div id="header">
-        <img src="img/hospital.jpg" alt="image" class="checker-img">
-        <h2>Please enter your location</h2>
+        <img src="img/checker.png" alt="image" class="checker-img">
+        <h2>What symptoms do you have?</h2>
     </div>
 
-    <div class="container" id="location">
-        <form action="hospital_result.html">
-            <label for="zipcode">Zip Code</label>
-            <input type="text" id="input_zipcode" name="zipcode" placeholder="Your zipcode">
-          
-            <label for="city">City</label>
-            <input type="text" id="input_city" name="city" placeholder="Your city">
-          
-            <label for="county">County</label>
-            <input type="text" id="input_county" name="county" placeholder="Your county">
-
-            <label for="state">State</label>
-            <input type="text" id="input_state" name="state" placeholder="Your state">
-            
-            <a href="hospital_result.html">
-            <input type="submit" value="Submit">
-            </a>
-          </form>
+    <div>
+        <input type="text" id="symptom-input" placeholder="Enter symptom">
     </div>
+
+    <div>
+        <a href="age.html">
+            <button class="next">Next</button>
+        </a>
+    </div>
+
+    <div id="symptom-list"></div>
 
     <footer class="fixed-bottom">
         <div class="container">
