@@ -1,9 +1,11 @@
 import React from 'react';
-import HomePage from './components/HomePage';
+import HomePage from './HomePage';
+import Navigation from './Navigation';
 
-function App() {
+function App(props) {
     return (
         <div>
+          <Navigation />
           <HomePage />
         </div>
     );
