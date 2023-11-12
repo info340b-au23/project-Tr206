@@ -3,6 +3,7 @@ import Navigation from './Navigation';
 import Header from './Header';
 import Footer from './Footer';
 import Card from './Card';
+import { Profile } from './Profile';
 
 export function HomePage() {
     return (
@@ -36,7 +37,7 @@ export function HomePage() {
               buttonText="Find your hospital"
             />
           </div>
-    
+          <Profile />
           <Footer />
         </div>
       );
