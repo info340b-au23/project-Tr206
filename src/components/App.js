@@ -1,13 +1,13 @@
 import React from 'react';
 import './index.css';
-import HomePage from './HomePage';
-import Navigation from './Navigation';
+import MainPage from './components/MainPage';
+import Navigation from './components/Navigation';
 
 function App(props) {
     return (
         <div>
           <Navigation />
-          <HomePage />
+          <MainPage />
         </div>
     );
 }
