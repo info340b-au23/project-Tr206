@@ -1,7 +1,6 @@
 import React from 'react';
-import './index.css';
-import MainPage from './components/MainPage';
-import Navigation from './components/Navigation';
+import { MainPage } from './MainPage';
+import { Navigation } from './Navigation';
 
 function App(props) {
     return (
