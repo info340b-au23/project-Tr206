@@ -1,7 +1,6 @@
 import React from 'react';
 import { Navigation } from './Navigation';
 import { Link } from 'react-router-dom';
-import { Profile } from './Profile';
 
 export function MainPage() {
   function Header() {
@@ -21,7 +20,7 @@ export function MainPage() {
         <div className="container">
           <p><a href="mailto:healthchecker@gmail.com"><span className="material-icons">email</span>healthchecker@gmail.com</a></p>
           <p><a href="tel:555-123-4567"><span className="material-icons">phone</span> 555-123-4567</a></p>
-          <p>&copy; Health Symptom Checker 2023</p>
+          <p>&copy; Diabetic Health Checker 2023</p>
         </div>
       </footer>
     );
@@ -55,7 +54,7 @@ export function MainPage() {
       <Card
         title="Create an Account"
         description="Sign up now to create a profile and access more features."
-        buttonLink="/profile"
+        buttonLink="/Profile"
       />
     );
   }
