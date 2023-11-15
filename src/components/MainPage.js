@@ -1,9 +1,9 @@
 import React from 'react';
 import { Navigation } from './Navigation';
+import { Link } from 'react-router-dom';
 import { Profile } from './Profile';
 
 export function MainPage() {
-  // Header component
   function Header() {
     return (
       <header>
@@ -27,7 +27,6 @@ export function MainPage() {
     );
   }
 
-  // Card component
   function Card(props) {
     return (
       <div className="d-flex col-md-6 col-xl-3 mb-4">
@@ -41,7 +40,7 @@ export function MainPage() {
                 <h2 className="card-title">{props.title}</h2>
                 <p className="card-text">{props.description}</p>
                 {props.buttonText && (
-                  <a href={props.buttonLink} className="btn btn-dark mt-auto">{props.buttonText}</a>
+                  <Link to={props.buttonLink} className="btn btn-dark mt-auto">{props.buttonText}</Link>
                 )}
               </div>
             </div>
@@ -51,38 +50,39 @@ export function MainPage() {
     );
   }
 
+  function SignUpCard() {
+    return (
+      <Card
+        title="Create an Account"
+        description="Sign up now to create a profile and access more features."
+        buttonLink="/profile"
+      />
+    );
+  }
+
+  function FindHospitalCard() {
+    return (
+      <Card
+        imgSrc="img/hospital.jpg"
+        title="Find a treatment center near you"
+        description="Want to follow up with a doctor find a hospital near you?"
+        buttonLink="hospital.html"
+        buttonText="Find your hospital"
+      />
+    );
+  }
+
   return (
-    <div>
-      <Navigation />
-      <Header />
-      <div className="row">
-        {/* Card 1 */}
-        <Card
-          imgSrc="img/profile.jpg"
-          title="Sign Up Now!"
-          description="Sign up now to create an account with us to save your information."
-          buttonText="Create an account"
-        />
-
-        {/* Card 2 */}
-        <Card
-          imgSrc="img/doctor.jpg"
-          title="Take the Symptom Quiz!"
-          description="Want to track or discover what your symptoms may be from?"
-          buttonText="Take Quiz"
-        />
-
-        {/* Card 3 */}
-        <Card
-          imgSrc="img/hospital.jpg"
-          title="Find a treatment center near you"
-          description="Want to follow up with a doctor find a hospital near you?"
-          buttonLink="hospital.html"
-          buttonText="Find your hospital"
-        />
+      <div>
+        <Navigation />
+        <Header />
+        {/* Other components or content */}
+        <div className="container card-container">
+        <SignUpCard />
+        <FindHospitalCard />
+        {/* Other components or content */}
+        </div>
+        <Footer />
       </div>
-      <Profile />
-      <Footer />
-    </div>
-  );
+    );
 }
