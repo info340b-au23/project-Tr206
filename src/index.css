@@ -12,9 +12,14 @@ body {
 
 #header {
     display: flex;
+    justify-content: flex-start;
     align-items: center;
-    justify-content: center;
-    margin-top: 5rem;
+    background-size: cover;
+    background-position: center;
+    background-color: #517470;
+    color: white;
+    padding-top: 6rem;
+    padding-bottom: 1rem;
 }
 
 h1 {
@@ -125,7 +130,7 @@ nav ul li a:hover {
 header {
     background-size: cover;
     background-position: center;
-    background-color: #a3b18a;
+    background-color: #517470;
     color: white;
     padding-top: 6rem;
     padding-bottom: 1rem;
@@ -134,15 +139,16 @@ header {
 
 .card-container {
     display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
+    flex-wrap: wrap; 
+    justify-content: space-evenly; 
+    align-items: flex-start; 
+    margin-top: 3rem;
   }
   
   .card {
-    width: 90%; 
+    flex: 1;
     max-width: 400px; 
-    margin-bottom: 20px; 
+    margin: 0 10px;
     border: 2px solid black;
     border-radius: 8px;
     padding: 15px;
@@ -282,4 +288,11 @@ footer p:last-child {
 .profile-options {
     font-size: 1.5rem; 
     margin-top: 30px; 
+}
+
+.signup-card {
+    background-color: #f7f7f7;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

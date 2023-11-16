@@ -72,16 +72,18 @@ export function MainPage() {
   }
 
   return (
-      <div>
-        <Navigation />
-        <Header />
-        {/* Other components or content */}
-        <div className="container card-container">
-        <SignUpCard />
-        <FindHospitalCard />
-        {/* Other components or content */}
+    <div>
+      <Navigation />
+      <Header />
+      {/* Other components or content */}
+      <div className="container">
+        <div className="card-container">
+          <SignUpCard />
+          <FindHospitalCard />
+          {/* add more cards or components as needed */}
         </div>
-        <Footer />
       </div>
-    );
+      <Footer />
+    </div>
+  );
 }
