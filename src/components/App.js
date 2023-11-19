@@ -1,8 +1,9 @@
-import React from 'react';
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { MainPage } from './MainPage';
 import { Profile } from './Profile';
+import BloodGlucoseChart from './BloodGlucoseChart'; // Import the new component
 
 function App() {
   return (
@@ -10,7 +11,8 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/profile" element={<Profile />} />
-        {/* Add more routes as needed */}
+        <Route path="/blood-glucose" element={<BloodGlucoseChart />} /> 
+        {/* Add the new route */}
       </Routes>
     </Router>
   );

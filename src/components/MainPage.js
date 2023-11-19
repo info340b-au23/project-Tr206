@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navigation } from './Navigation';
 import { Link } from 'react-router-dom';
+import BloodGlucoseChart from './BloodGlucoseChart';
 
 export function MainPage() {
   function Header() {
@@ -23,6 +24,12 @@ export function MainPage() {
           <p>&copy; Diabetic Health Checker 2023</p>
         </div>
       </footer>
+    );
+  }
+
+  function BloodGlucoseLink() {
+    return (
+      <Link to="/blood-glucose" className="btn btn-dark mt-auto">Take the graph!</Link>
     );
   }
 
@@ -72,16 +79,15 @@ export function MainPage() {
   }
 
   return (
-      <div>
-        <Navigation />
-        <Header />
-        {/* Other components or content */}
-        <div className="container card-container">
+    <div>
+      <Navigation />
+      <Header />
+      <div className="container card-container">
         <SignUpCard />
         <FindHospitalCard />
-        {/* Other components or content */}
-        </div>
-        <Footer />
+        <BloodGlucoseLink />
       </div>
-    );
+      <Footer />
+    </div>
+  );
 }
