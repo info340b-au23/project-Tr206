@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { MainPage } from './MainPage';
 import { Profile } from './Profile';
-import BloodGlucoseChart from './BloodGlucoseChart'; 
 import { Diary } from './Diary';
 import { FindLocation } from './FindLocation';
 import { HealthStats } from './HealthStats';
