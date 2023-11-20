@@ -82,10 +82,15 @@ export function MainPage() {
     <div>
       <Navigation />
       <Header />
-      <div className="container card-container">
-        <SignUpCard />
-        <FindHospitalCard />
-        <BloodGlucoseLink />
+
+      {/* Other components or content */}
+      <div className="container">
+        <div className="card-container">
+          <SignUpCard />
+          <FindHospitalCard />
+          {/* add more cards or components as needed */}
+        </div>
+
       </div>
       <Footer />
     </div>
