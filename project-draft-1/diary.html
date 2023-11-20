@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="css/style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Health Checker - Diary</title>
+    <meta name="author" content="Your Name">
+    <meta name="description" content="Track your health symptoms with the Health Checker Diary">
+    <link rel="stylesheet" href="zz.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="symptom-1.html"><img src="img/quiz.png" alt="Quiz Icon">Symptom Quiz</a></li>
+            <li><a href="hospital.html"><img src="img/location.png" alt="Location Icon">Find a Treatment Center Near you</a></li>
+            <li><a href="#diary" class="active"><img src="img/diary.png" alt="Diary Icon">Diary</a></li>
+            <li><a href="#profile"><img src="img/profile.png" alt="Profile Icon">Profile</a></li>
+        </ul>
+    </nav>
+    <header>
+        <div class="container">
+            <a href="index.html">
+                <h1 class="health-checker-link">Health Checker</h1>
+            </a>
+        </div>
+    </header>
+
+    <div id="diary-header">
+        <img src="img/diary-icon.png" alt="Diary Icon" class="diary-img">
+        <h2>Diary</h2>
+    </div>
+
+    <div>
+        <h3 class="diary-description">Record your health notes and symptoms in the diary.</h3>
+    </div>
+
+    <div class="diary-entry">
+        <label for="currentDate">Select Today's Date:</label>
+        <input type="date" id="currentDate" required>
+
+        <label for="currentNote">Today's Note:</label>
+        <textarea rows="4" cols="50" id="currentNote"></textarea>
+        <button onclick="saveNote()">Save Note</button>
+    </div>
+
+    <div>
+        <h3 class="previous-entries-header">Previous Entries</h3>
+        <ul id="previousEntries"></ul>
+    </div>
+
+    <footer class="fixed-bottom">
+        <div class="container">
+            <p><a href="mailto:healthchecker@gmail.com"><span class="material-icons">email</span>
+                    healthchecker@gmail.com</a></p>
+            <p><a href="tel:555-123-4567"><span class="material-icons">phone</span> 555-123-4567</a></p>
+            <p>&copy; Health Symptom Checker 2023</p>
+        </div>
+    </footer>
+</body>
+</html>

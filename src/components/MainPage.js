@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navigation } from './Navigation';
 import { Link } from 'react-router-dom';
+import BloodGlucoseChart from './BloodGlucoseChart';
 
 function AdditionalInfo() {
   return (
@@ -51,7 +52,17 @@ export function MainPage() {
     );
   }
 
+<<<<<<< HEAD
   function Card({ iconSrc, title, description, buttonText, buttonLink }) {
+=======
+  function BloodGlucoseLink() {
+    return (
+      <Link to="/blood-glucose" className="btn btn-dark mt-auto">Take the graph!</Link>
+    );
+  }
+
+  function Card(props) {
+>>>>>>> 39ce233f62ab7876ead72db7fca555a73bff4b6a
     return (
       <div className="card mb-4">
         <div className="card-body">
@@ -74,6 +85,11 @@ export function MainPage() {
     <div>
       <Navigation />
       <Header />
+<<<<<<< HEAD
+=======
+
+      {/* Other components or content */}
+>>>>>>> 39ce233f62ab7876ead72db7fca555a73bff4b6a
       <div className="container">
         <div className="row">
           <div className="col-md-6">
@@ -95,6 +111,7 @@ export function MainPage() {
             />
           </div>
         </div>
+
       </div>
       <AdditionalInfo />
       <Footer />
