@@ -45,43 +45,43 @@ export function DiaryPage() {
     );
   }
 
-  function renderDiaryEntry() {
-    return (
-      <div className="diary-entry">
-        <label htmlFor="currentDate">Select Today's Date:</label>
-        <input type="date" id="currentDate" value={currentDate} onChange={handleDateChange} required/>
+  // function renderDiaryEntry() {
+  //   return (
+  //     <div className="diary-entry">
+  //       <label htmlFor="currentDate">Select Today's Date:</label>
+  //       <input type="date" id="currentDate" value={currentDate} onChange={handleDateChange} required/>
   
-        <label htmlFor="currentNote">Today's Note:</label>
-        <textarea rows="4" cols="50" id="currentNote" value={currentNote} onChange={handleNoteChange}></textarea>
+  //       <label htmlFor="currentNote">Today's Note:</label>
+  //       <textarea rows="4" cols="50" id="currentNote" value={currentNote} onChange={handleNoteChange}></textarea>
   
-        <label htmlFor="bloodGlucose">Blood Glucose Level (mg/dL):</label>
-        <input type="number" id="bloodGlucose" value={bloodGlucose} onChange={handleBloodGlucoseChange} required/>
+  //       <label htmlFor="bloodGlucose">Blood Glucose Level (mg/dL):</label>
+  //       <input type="number" id="bloodGlucose" value={bloodGlucose} onChange={handleBloodGlucoseChange} required/>
   
-        <label htmlFor="systolicPressure">Systolic Blood Pressure (mmHg):</label>
-        <input type="number" id="systolicPressure" value={systolicPressure} onChange={handleSystolicPressureChange} required/>
+  //       <label htmlFor="systolicPressure">Systolic Blood Pressure (mmHg):</label>
+  //       <input type="number" id="systolicPressure" value={systolicPressure} onChange={handleSystolicPressureChange} required/>
   
-        <label htmlFor="diastolicPressure">Diastolic Blood Pressure (mmHg):</label>
-        <input type="number" id="diastolicPressure" value={diastolicPressure} onChange={handleDiastolicPressureChange} required/>
+  //       <label htmlFor="diastolicPressure">Diastolic Blood Pressure (mmHg):</label>
+  //       <input type="number" id="diastolicPressure" value={diastolicPressure} onChange={handleDiastolicPressureChange} required/>
   
-        <button onClick={handleSaveNote}>Save Note</button>
-      </div>
-    );
-  }
+  //       <button onClick={handleSaveNote}>Save Note</button>
+  //     </div>
+  //   );
+  // }
   
   
 
-  function renderPreviousEntries() {
-    return (
-      <div>
-        <h3 className="previous-entries-header">Previous Entries</h3>
-        <ul id="previousEntries">
-          {previousEntries.map((entry, index) => (
-            <li key={index}>{entry}</li>
-          ))}
-        </ul>
-      </div>
-    );
-  }
+  // function renderPreviousEntries() {
+  //   return (
+  //     <div>
+  //       <h3 className="previous-entries-header">Previous Entries</h3>
+  //       <ul id="previousEntries">
+  //         {previousEntries.map((entry, index) => (
+  //           <li key={index}>{entry}</li>
+  //         ))}
+  //       </ul>
+  //     </div>
+  //   );
+  // }
   
 
   return (
@@ -89,8 +89,8 @@ export function DiaryPage() {
       {renderNav()}
       {renderDiaryHeader()}
       {renderDiaryDescription()}
-      {renderDiaryEntry()}
-      {renderPreviousEntries()}
+      {/* {renderDiaryEntry()}
+      {renderPreviousEntries()} */}
       {Footer()}
     </div>
   );
