@@ -2,6 +2,7 @@ import React from 'react';
 import { Navigation } from './Navigation';
 import { Link } from 'react-router-dom';
 
+
 function AdditionalInfo() {
   return (
     <div className="container diabetes-info">
@@ -24,6 +25,7 @@ function AdditionalInfo() {
           </div>
         </div>
       </div>
+
     </div>
   );
 }

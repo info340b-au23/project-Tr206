@@ -6,19 +6,17 @@ import {
   VerticalGridLines,
   HorizontalGridLines,
   LineSeries,
-} from 'index';
+} from 'react-vis';
 
 export default function BloodGlucoseChart() {
   const data = [
     { x: 0, y: 5 },
     { x: 4, y: 7 },
     { x: 8, y: 3 },
-    { x: 0, y: 5 },
-    { x: 4, y: 7 },
-    { x: 8, y: 3 },
-    { x: 0, y: 5 },
-    { x: 4, y: 7 },
-    { x: 8, y: 3 },
+    { x: 12, y: 5 },
+    { x: 16, y: 7 },
+    { x: 20, y: 3 },
+    { x: 24, y: 5 },
     // Add more data points as needed
   ];
 
@@ -44,4 +42,5 @@ export default function BloodGlucoseChart() {
       <LineSeries data={data} />
     </XYPlot>
   );
+  
 }
