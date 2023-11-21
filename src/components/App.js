@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import 'react-vis/dist/style.css';
 import { MainPage } from './MainPage';
 import { Profile } from './Profile';
 import { Diary } from './Diary';
