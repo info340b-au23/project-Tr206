@@ -4,6 +4,20 @@ import { Link } from 'react-router-dom';
 
 
 export function DiaryPage() {
+
+  const [currentDate, setCurrentDate] = useState('');
+  const [currentNote, setCurrentNote] = useState('');
+  const [bloodGlucose, setBloodGlucose] = useState('');
+  const [systolicPressure, setSystolicPressure] = useState('');
+  const [diastolicPressure, setDiastolicPressure] = useState('');
+  const [previousEntries, setPreviousEntries] = useState([]);
+
+  const handleDateChange = (event) => setCurrentDate(event.target.value);
+  const handleNoteChange = (event) => setCurrentNote(event.target.value);
+  const handleBloodGlucoseChange = (event) => setBloodGlucose(event.target.value);
+  const handleSystolicPressureChange = (event) => setSystolicPressure(event.target.value);
+  const handleDiastolicPressureChange = (event) => setDiastolicPressure(event.target.value);
+
   function Footer() {
     return (
       <footer className="fixed-bottom">
