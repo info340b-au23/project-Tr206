@@ -12,7 +12,7 @@ export function FindLocation() {
     // Load your CSV data here
     const fetchData = async () => {
       try {
-        const response = await fetch('../data/HospitalData.csv');
+        const response = await fetch('../../public/data/HospitalData.csv');
         const csvData = await response.text();
         console.log('Fetched CSV Data:', csvData); // Log fetched CSV data for debugging
         const parsedData = Papa.parse(csvData, { header: true }).data;
