@@ -11,8 +11,8 @@ export function FindLocation() {
   useEffect(() => {
     // Load your CSV data here
     const fetchData = async () => {
-      try {
-        const response = await fetch('../../public/data/HospitalData.csv');
+      try { 
+        const response = await fetch('/data/Hospital_Data.csv');
         const csvData = await response.text();
         console.log('Fetched CSV Data:', csvData); // Log fetched CSV data for debugging
         const parsedData = Papa.parse(csvData, { header: true }).data;
@@ -27,23 +27,26 @@ export function FindLocation() {
   }, []); // Empty dependency array to ensure the effect runs only once
 
   const findNearbyHospitals = () => {
-    if (!filterZipCode) {
-      setNoHospitalsFound(false);
-      setFilteredData([]);
-      return;
-    }
+  if (!filterZipCode) {
+    setNoHospitalsFound(false);
+    setFilteredData([]);
+    return;
+  }
 
-    // Assuming your CSV has a 'ZIPCode' column
-    const hospitalsInZipCode = data.filter((row) => row.ZIPCode == filterZipCode);
+  // Assuming your CSV has a 'ZIPCode' column
+  const hospitalsInZipCode = data.filter(
+    (hospital) => hospital.ZIPCode === filterZipCode.toLowerCase()
+  );
+  console.log('hospitalsInZipCode:', hospitalsInZipCode);
 
-    if (hospitalsInZipCode.length > 0) {
-      setNoHospitalsFound(false);
-      setFilteredData(hospitalsInZipCode);
-    } else {
-      setNoHospitalsFound(true);
-      setFilteredData([]);
-    }
-  };
+  if (hospitalsInZipCode.length > 0) {
+    setNoHospitalsFound(false);
+    setFilteredData(hospitalsInZipCode);
+  } else {
+    setNoHospitalsFound(true);
+    setFilteredData([]);
+  }
+};
 
   return (
     <div>
