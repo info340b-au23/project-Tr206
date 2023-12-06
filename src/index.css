@@ -285,6 +285,26 @@ footer p:last-child {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.profile-card {
+    display: flex;
+    align-items: center;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 20px;
+  }
+  
+  .profile-card img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 20px;
+  }
+  
+  .user-info p {
+    margin: 8px 0;
+  }
+
 @media (min-width: 992px) {
     .card-body {
         margin: 0 auto;
@@ -297,3 +317,4 @@ footer p:last-child {
         margin: 0 auto;
     }
 }
+

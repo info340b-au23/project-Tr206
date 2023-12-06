@@ -93,7 +93,7 @@ export function MainPage() {
               title="Safe In-Person Appointments"
               description="Looking for medical care? Use our tool to find nearby hospitals, clinics, or specialized centers. Easily locate medical facilities based on your location or search criteria. From routine check-ups to specialized care, connect with medical professionals for your specific needs."
               buttonText="Find your nearest center"
-              buttonLink="hospital.html"
+              buttonLink="/FindLocation"
             />
           </div>
         </div>

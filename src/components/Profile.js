@@ -1,7 +1,15 @@
-import React from 'react';
-import { Navigation } from './Navigation'; 
+import React, { useState } from 'react';
+import { Navigation } from './Navigation';
+import { Login } from './Login';
 
 export function Profile() {
+  const [user, setUser] = useState(null);
+
+  // Function to handle login
+  const handleLogin = (userData) => {
+    setUser(userData);
+  };
+
   return (
     <div>
       <header>
@@ -9,13 +17,23 @@ export function Profile() {
           <h1>User Profile</h1>
         </div>
       </header>
-      <Navigation /> {/* Include the Navigation component */}
+      <Navigation />
       <div className="left-container">
-        <div className="profile-options">
-          <h2>Create or Log In to Your Account</h2>
-          <p>If you haven't created an account yet, <button>Create Account</button></p>
-          <p>If you already have an account, <button>Login</button></p>
-        </div>
+        {!user ? (
+          <Login handleLogin={handleLogin} />
+        ) : (
+          <div>
+            <h2>Welcome, {user.name}!</h2>
+            <div className="profile-card">
+              <img src="/img/profile_icon.png" alt="Profile Icon" />
+              <div className="user-info">
+                <p>Name: {user.name}</p>
+                <p>Email: {user.email}</p>
+                <p>Age: {user.age}</p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
