@@ -59,8 +59,9 @@ export function Login({ handleLogin }) {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            aria-label="Email Input"
           />
-          <button type="submit">Login</button>
+          <button type="submit" aria-label="Login Button">Login</button>
         </form>
         {error && <p>{error}</p>}
       </div>

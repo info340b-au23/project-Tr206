@@ -45,9 +45,9 @@ export function MainPage() {
     return (
       <footer className="mt-auto">
         <div className="container">
-          <p><a href="mailto:healthchecker@gmail.com"><span className="material-icons">email</span>healthchecker@gmail.com</a></p>
-          <p><a href="tel:555-123-4567"><span className="material-icons">phone</span> 555-123-4567</a></p>
-          <p>&copy; Diabetic Health Checker 2023</p>
+        <p><a href="mailto:healthchecker@gmail.com" aria-label="Contact Email: healthchecker@gmail.com"><span className="material-icons">email</span>healthchecker@gmail.com</a></p>
+        <p><a href="tel:555-123-4567" aria-label="Contact Number: 555-123-4567"><span className="material-icons">phone</span> 555-123-4567</a></p>
+        <p>&copy; Diabetic Health Checker 2023</p>
         </div>
       </footer>
     );
@@ -98,7 +98,7 @@ export function MainPage() {
           </div>
         </div>
       </div>
-      <AdditionalInfo />
+      <AdditionalInfo aria-label="Additional Information"/>
       <Footer />
     </div>
   );
