@@ -1,21 +1,23 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { Navigation } from './Navigation';
+import BloodGlucoseChart from './BloodGlucoseChart';
 
 export function HealthStats() {
+  const location = useLocation();
+  const { bloodGlucose, systolicPressure, diastolicPressure, heartRate } = location.state || {};
+
   return (
     <div>
-      <header>
-        <div className="container">
-          <h1>Health Tracker</h1>
-        </div>
-      </header>
-      <Navigation /> {/* Include the Navigation component */}
-      <div className="left-container">
-        <p> This is the Health Tracker Page which will show charts related to the metrics inputted.</p>
-      </div>
+      <Navigation />
+      <h2>Health Stats</h2>
+      {/* received graph */}
+      <BloodGlucoseChart
+        bloodGlucose={bloodGlucose}
+        systolicPressure={systolicPressure}
+        diastolicPressure={diastolicPressure}
+        heartRate={heartRate}
+      />
     </div>
   );
 }
-
-
-

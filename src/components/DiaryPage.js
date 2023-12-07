@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Navigation } from './Navigation';
-import BloodGlucoseChart from './BloodGlucoseChart';
 
 
 
@@ -15,6 +14,8 @@ export function DiaryPage() {
   const [heartRate, setHeartRate] = useState('');
   const [previousEntries, setPreviousEntries] = useState([]);
 
+  const navigate = useNavigate();
+  
   const handleHeartRateChange = (event) => setHeartRate(event.target.value);
   const handleDateChange = (event) => setCurrentDate(event.target.value);
   const handleNoteChange = (event) => setCurrentNote(event.target.value);
@@ -22,6 +23,17 @@ export function DiaryPage() {
   const handleSystolicPressureChange = (event) => setSystolicPressure(event.target.value);
   const handleDiastolicPressureChange = (event) => setDiastolicPressure(event.target.value);
 
+  const handleNavigateToHealthStats = () => {
+    // Navigate to HealthStats with data
+    navigate('/healthstats', {
+      state: {
+        bloodGlucose,
+        systolicPressure,
+        diastolicPressure,
+        heartRate,
+      },
+    });
+  };
   function Footer() {
     return (
       <footer className="fixed-bottom">
@@ -64,33 +76,34 @@ export function DiaryPage() {
     );
   }
 
-  function renderDiaryEntry() {
-    return (
-      <div className="diary-entry">
-        <label htmlFor="currentDate">Select Today's Date:</label>
-        <input type="date" id="currentDate" value={currentDate} onChange={handleDateChange} required/>
-  
-        <label htmlFor="currentNote">Today's Note:</label>
-        <textarea rows="4" cols="50" id="currentNote" value={currentNote} onChange={handleNoteChange}></textarea>
-  
-        <label htmlFor="bloodGlucose">Blood Glucose Level (mg/dL):</label>
-        <input type="number" id="bloodGlucose" value={bloodGlucose} onChange={handleBloodGlucoseChange} required/>
-  
-        <label htmlFor="systolicPressure">Systolic Blood Pressure (mmHg):</label>
-        <input type="number" id="systolicPressure" value={systolicPressure} onChange={handleSystolicPressureChange} required/>
-  
-        <label htmlFor="diastolicPressure">Diastolic Blood Pressure (mmHg):</label>
-        <input type="number" id="diastolicPressure" value={diastolicPressure} onChange={handleDiastolicPressureChange} required/>
-        
-        <label htmlFor="heartRate">Heart Rate (BPM):</label>
-        <input type="number" id="heartRate" value={heartRate} onChange={handleHeartRateChange} required/>
+function renderDiaryEntry() {
+  return (
+    <div className="diary-entry">
+      <label htmlFor="currentDate">Select Today's Date:</label>
+      <input type="date" id="currentDate" value={currentDate} onChange={handleDateChange} required/>
 
-        {/* <button onClick={handleSaveNote}>Save Note</button> */}
-      </div>
-    );
-  }
-  
-  
+      <label htmlFor="currentNote">Today's Note:</label>
+      <textarea rows="4" cols="50" id="currentNote" value={currentNote} onChange={handleNoteChange}></textarea>
+
+      <label htmlFor="bloodGlucose">Blood Glucose Level (mmol/h):</label>
+      <input type="number" id="bloodGlucose" value={bloodGlucose} onChange={handleBloodGlucoseChange} required/>
+
+      <label htmlFor="systolicPressure">Systolic Blood Pressure (mmHg):</label>
+      <input type="number" id="systolicPressure" value={systolicPressure} onChange={handleSystolicPressureChange} required/>
+
+      <label htmlFor="diastolicPressure">Diastolic Blood Pressure (mmHg):</label>
+      <input type="number" id="diastolicPressure" value={diastolicPressure} onChange={handleDiastolicPressureChange} required/>
+
+      <label htmlFor="heartRate">Heart Rate (BPM):</label>
+      <input type="number" id="heartRate" value={heartRate} onChange={handleHeartRateChange} required/>
+
+      <button onClick={handleNavigateToHealthStats}>Go to Health Stats</button>
+
+      {/* <button onClick={handleSaveNote}>Save Note</button> */}
+    </div>
+  );
+}
+
 
   function renderPreviousEntries() {
     return (
@@ -114,15 +127,16 @@ export function DiaryPage() {
       {renderDiaryDescription()}
       {renderDiaryEntry()}
       {renderPreviousEntries()}
-      <BloodGlucoseChart
+      {/* <BloodGlucoseChart
         bloodGlucose={bloodGlucose}
         systolicPressure={systolicPressure}
         diastolicPressure={diastolicPressure}
         heartRate={heartRate}
-      />
+      /> */}
       {Footer()}
     </div>
   );
 };
+
 
 
