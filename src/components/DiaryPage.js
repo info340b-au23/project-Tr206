@@ -12,8 +12,10 @@ export function DiaryPage() {
   const [bloodGlucose, setBloodGlucose] = useState('');
   const [systolicPressure, setSystolicPressure] = useState('');
   const [diastolicPressure, setDiastolicPressure] = useState('');
+  const [bloodSugar, setBloodSugar] = useState('');
   const [previousEntries, setPreviousEntries] = useState([]);
 
+  const handleBloodSugar = (event) => setBloodSugar(event.target.value);
   const handleDateChange = (event) => setCurrentDate(event.target.value);
   const handleNoteChange = (event) => setCurrentNote(event.target.value);
   const handleBloodGlucoseChange = (event) => setBloodGlucose(event.target.value);
@@ -109,7 +111,11 @@ export function DiaryPage() {
       {renderDiaryDescription()}
       {renderDiaryEntry()}
       {renderPreviousEntries()}
-       <BloodGlucoseChart/>
+      <BloodGlucoseChart
+        bloodGlucose={bloodGlucose}
+        systolicPressure={systolicPressure}
+        diastolicPressure={diastolicPressure}
+      />
       {Footer()}
     </div>
   );
