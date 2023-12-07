@@ -12,10 +12,10 @@ export function DiaryPage() {
   const [bloodGlucose, setBloodGlucose] = useState('');
   const [systolicPressure, setSystolicPressure] = useState('');
   const [diastolicPressure, setDiastolicPressure] = useState('');
-  const [bloodSugar, setBloodSugar] = useState('');
+  const [heartRate, setHeartRate] = useState('');
   const [previousEntries, setPreviousEntries] = useState([]);
 
-  const handleBloodSugar = (event) => setBloodSugar(event.target.value);
+  const handleHeartRateChange = (event) => setHeartRate(event.target.value);
   const handleDateChange = (event) => setCurrentDate(event.target.value);
   const handleNoteChange = (event) => setCurrentNote(event.target.value);
   const handleBloodGlucoseChange = (event) => setBloodGlucose(event.target.value);
@@ -81,7 +81,10 @@ export function DiaryPage() {
   
         <label htmlFor="diastolicPressure">Diastolic Blood Pressure (mmHg):</label>
         <input type="number" id="diastolicPressure" value={diastolicPressure} onChange={handleDiastolicPressureChange} required/>
-  
+        
+        <label htmlFor="heartRate">Heart Rate (BPM):</label>
+        <input type="number" id="heartRate" value={heartRate} onChange={handleHeartRateChange} required/>
+
         {/* <button onClick={handleSaveNote}>Save Note</button> */}
       </div>
     );
@@ -115,6 +118,7 @@ export function DiaryPage() {
         bloodGlucose={bloodGlucose}
         systolicPressure={systolicPressure}
         diastolicPressure={diastolicPressure}
+        heartRate={heartRate}
       />
       {Footer()}
     </div>
