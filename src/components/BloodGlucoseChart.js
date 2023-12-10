@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   XYPlot,
   XAxis,
@@ -8,19 +8,55 @@ import {
   LineMarkSeries,
   FlexibleXYPlot,
 } from 'react-vis';
+import { onValue } from 'firebase/database';
+import { healthDataRef } from '../index';
 
 const chartStyle = {
   marginBottom: '20px',
 };
 
-export default function BloodGlucoseChart({ bloodGlucose, systolicPressure, diastolicPressure, heartRate }) {
-  const bloodGlucoseData = [{ x: 0, y: parseFloat(bloodGlucose) || 0 }];
-  const systolicPressureData = [{ x: 0, y: parseFloat(systolicPressure) || 0 }];
-  const diastolicPressureData = [{ x: 0, y: parseFloat(diastolicPressure) || 0 }];
-  const heartRateData = [{ x: 0, y: parseFloat(heartRate) || 0 }];
+const BloodGlucoseChart = () => {
+  const [data, setData] = useState({
+    bloodGlucose: [{ x: 0, y: 0 }],
+    systolicPressure: [{ x: 0, y: 0 }],
+    diastolicPressure: [{ x: 0, y: 0 }],
+    heartRate: [{ x: 0, y: 0 }],
+  });
 
   const xMin = 0;
   const xMax = 24; // Assuming 24 hours
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const snapshot = await onValue(healthDataRef);
+        const healthData = snapshot.val();
+
+        const updatedData = {
+          bloodGlucose: Object.entries(healthData).map(([key, value]) => ({
+            x: key,
+            y: value.bloodGlucose || 0,
+          })),
+          systolicPressure: Object.entries(healthData).map(([key, value]) => ({
+            x: key,
+            y: value.systolicPressure || 0,
+          })),
+          diastolicPressure: Object.entries(healthData).map(([key, value]) => ({
+            x: key,
+            y: value.diastolicPressure || 0,
+          })),
+          heartRate: Object.entries(healthData).map(([key, value]) => ({
+            x: key,
+            y: value.heartRate || 0,
+          })),
+        };
+        setData(updatedData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []); // Run this effect only once on mount
 
   return (
     <div>
@@ -42,7 +78,7 @@ export default function BloodGlucoseChart({ bloodGlucose, systolicPressure, dias
             <HorizontalGridLines />
             <XAxis title="Time (h)" />
             <YAxis title="Blood Glucose (mmol/h)" />
-            <LineMarkSeries data={bloodGlucoseData} />
+            <LineMarkSeries data={data.bloodGlucose} />
           </FlexibleXYPlot>
         </div>
 
@@ -62,8 +98,8 @@ export default function BloodGlucoseChart({ bloodGlucose, systolicPressure, dias
             <HorizontalGridLines />
             <XAxis title="Time (h)" />
             <YAxis title="Blood Pressure (mmHg)" />
-            <LineMarkSeries data={systolicPressureData} stroke="red" />
-            <LineMarkSeries data={diastolicPressureData} stroke="blue" />
+            <LineMarkSeries data={data.systolicPressure} stroke="red" />
+            <LineMarkSeries data={data.diastolicPressure} stroke="blue" />
           </FlexibleXYPlot>
         </div>
         
@@ -83,12 +119,12 @@ export default function BloodGlucoseChart({ bloodGlucose, systolicPressure, dias
             <HorizontalGridLines />
             <XAxis title="Time (h)" />
             <YAxis title="Heart Rate (BPM)" />
-            <LineMarkSeries data={heartRateData} />
+            <LineMarkSeries data={data.heartRate} />
           </FlexibleXYPlot>
         </div>
       </div>
     </div>
   );
-}
+};
 
-
+export default BloodGlucoseChart;

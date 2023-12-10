@@ -1,7 +1,8 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { Navigation } from './Navigation';
 import BloodGlucoseChart from './BloodGlucoseChart';
+import { healthDataRef, firebaseApp } from '../index';
+import { onValue } from 'firebase/database';
 
 function Header() {
   return (
@@ -26,21 +27,34 @@ function Footer() {
 }
 
 export function HealthStats() {
-  const location = useLocation();
-  const { bloodGlucose, systolicPressure, diastolicPressure, heartRate } = location.state || {};
+  const [healthData, setHealthData] = useState([]);
 
+  useEffect(() => {
+    const dataRef = healthDataRef;
+
+    const fetchData = () => {
+      const unsubscribe = onValue(dataRef, (snapshot) => {
+        const data = snapshot.val();
+        const formattedData = Object.keys(data).map((timestamp) => ({
+          x: new Date(parseInt(timestamp, 10)),
+          y: data[timestamp].bloodGlucose,
+        }));
+        setHealthData(formattedData);
+      });
+
+      // Clean up the event listener to avoid memory leaks
+      return () => unsubscribe();
+    };
+
+    fetchData();
+  }, []);
   return (
     <div>
       <Navigation />
       <Header />
-      {/* received graph */}
-      <BloodGlucoseChart
-        bloodGlucose={bloodGlucose}
-        systolicPressure={systolicPressure}
-        diastolicPressure={diastolicPressure}
-        heartRate={heartRate}
-      />
+      <BloodGlucoseChart healthData={healthData} />
       <Footer />
     </div>
   );
 }
+

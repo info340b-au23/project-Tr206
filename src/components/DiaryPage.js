@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Navigation } from './Navigation';
+import { ref, getDatabase, push as firebasePush, onValue } from 'firebase/database';
 
 
 
@@ -13,7 +14,6 @@ export function DiaryPage() {
   const [diastolicPressure, setDiastolicPressure] = useState('');
   const [heartRate, setHeartRate] = useState('');
   const [previousEntries, setPreviousEntries] = useState([]);
-
   const navigate = useNavigate();
   
   const handleHeartRateChange = (event) => setHeartRate(event.target.value);
@@ -24,16 +24,45 @@ export function DiaryPage() {
   const handleDiastolicPressureChange = (event) => setDiastolicPressure(event.target.value);
 
   const handleNavigateToHealthStats = () => {
-    // Navigate to HealthStats with data
-    navigate('/healthstats', {
-      state: {
+    // save this data to firebase real time database
+    const db = getDatabase();
+    const notesRef = ref(db, 'notes');
+    const indicatorsRef = ref(db, 'indicators');
+
+    const noteEntry = {
+        note: currentNote,
+        date: currentDate,
+    };
+
+    const indicatorsEntry = {
         bloodGlucose,
         systolicPressure,
         diastolicPressure,
         heartRate,
-      },
-    });
-  };
+        date: currentDate,
+    };
+    
+    // Push the note entry to Firebase
+    firebasePush(notesRef, noteEntry)
+        .then(() => {
+            // Push the indicators entry to Firebase after note entry is successful
+            return firebasePush(indicatorsRef, indicatorsEntry);
+        })
+        .then(() => {
+            navigate('/healthstats', {
+                state: {
+                    bloodGlucose,
+                    systolicPressure,
+                    diastolicPressure,
+                    heartRate,
+                },
+            });
+        })
+        .catch((error) => {
+            console.error("Error writing to database", error);
+        });
+    };
+
   function Footer() {
     return (
       <footer className="fixed-bottom">
