@@ -9,7 +9,7 @@ import {
   FlexibleXYPlot,
 } from 'react-vis';
 import { onValue } from 'firebase/database';
-import { healthDataRef } from '../index';
+import { healthDataRef } from '../firebase/FirebaseConfig';
 
 const chartStyle = {
   marginBottom: '20px',
@@ -17,10 +17,10 @@ const chartStyle = {
 
 const BloodGlucoseChart = () => {
   const [data, setData] = useState({
-    bloodGlucose: [{ x: 0, y: 0 }],
-    systolicPressure: [{ x: 0, y: 0 }],
-    diastolicPressure: [{ x: 0, y: 0 }],
-    heartRate: [{ x: 0, y: 0 }],
+    bloodGlucose: [], // Initialize as an empty array for each metric
+    systolicPressure: [],
+    diastolicPressure: [],
+    heartRate: [],
   });
 
   const xMin = 0;
@@ -32,24 +32,21 @@ const BloodGlucoseChart = () => {
         const snapshot = await onValue(healthDataRef);
         const healthData = snapshot.val();
 
+        // Assuming the data structure now has an array of entries with a timestamp and metrics
         const updatedData = {
-          bloodGlucose: Object.entries(healthData).map(([key, value]) => ({
-            x: key,
-            y: value.bloodGlucose || 0,
-          })),
-          systolicPressure: Object.entries(healthData).map(([key, value]) => ({
-            x: key,
-            y: value.systolicPressure || 0,
-          })),
-          diastolicPressure: Object.entries(healthData).map(([key, value]) => ({
-            x: key,
-            y: value.diastolicPressure || 0,
-          })),
-          heartRate: Object.entries(healthData).map(([key, value]) => ({
-            x: key,
-            y: value.heartRate || 0,
-          })),
+          bloodGlucose: healthData.bloodGlucose || [], // Assuming it's an array of { timestamp, value }
+          systolicPressure: healthData.systolicPressure || [],
+          diastolicPressure: healthData.diastolicPressure || [],
+          heartRate: healthData.heartRate || [],
         };
+
+        // Format the timestamp or handle it as needed for the x-axis
+        updatedData.bloodGlucose = updatedData.bloodGlucose.map(({ timestamp, value }) => ({
+          x: timestamp, // Adjust as needed for the x-axis value
+          y: value,
+        }));
+        // Similarly format other metrics if needed
+
         setData(updatedData);
       } catch (error) {
         console.error('Error fetching data:', error);

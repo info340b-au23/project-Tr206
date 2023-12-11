@@ -13,11 +13,11 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/diarypage" element={<DiaryPage />} />
-        <Route path="/findlocation" element={<FindLocation />} /> {/* Route for FindLocation */}
-        <Route path="/healthstats" element={<HealthStats />} /> {/* Route for HealthStats */}
-        <Route path="/bloodglucosechart" element={<BloodGlucoseChart />} /> Route for HealthStats
+        <Route path="/Profile" element={<Profile />} />
+        <Route path="/DiaryPage" element={<DiaryPage />} />
+        <Route path="/FindLocation" element={<FindLocation />} /> {/* Route for FindLocation */}
+        <Route path="/HealthStats" element={<HealthStats />} /> {/* Route for HealthStats */}
+        <Route path="/BloodGlucoseChart" element={<BloodGlucoseChart />} /> Route for HealthStats
         {/* Add more routes as needed */}
       </Routes>
     </Router>
