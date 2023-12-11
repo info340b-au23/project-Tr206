@@ -111,22 +111,14 @@ function renderDiaryEntry() {
       <label htmlFor="currentDate">Select Today's Date:</label>
       <input type="date" id="currentDate" value={currentDate} onChange={handleDateChange} required/>
 
-      <label htmlFor="currentNote">Today's Note:</label>
+      <label htmlFor="currentNote">Describe your symptoms here:</label>
       <textarea rows="4" cols="50" id="currentNote" value={currentNote} onChange={handleNoteChange}></textarea>
+      <button onClick={handleNavigateToHealthStats}>Save Entry</button>
 
-      <label htmlFor="bloodGlucose">Blood Glucose Level (mmol/h):</label>
-      <input type="number" id="bloodGlucose" value={bloodGlucose} onChange={handleBloodGlucoseChange} required/>
-
-      <label htmlFor="systolicPressure">Systolic Blood Pressure (mmHg):</label>
-      <input type="number" id="systolicPressure" value={systolicPressure} onChange={handleSystolicPressureChange} required/>
-
-      <label htmlFor="diastolicPressure">Diastolic Blood Pressure (mmHg):</label>
-      <input type="number" id="diastolicPressure" value={diastolicPressure} onChange={handleDiastolicPressureChange} required/>
-
-      <label htmlFor="heartRate">Heart Rate (BPM):</label>
-      <input type="number" id="heartRate" value={heartRate} onChange={handleHeartRateChange} required/>
+      <label htmlFor="For more data">For more data, click this button:</label>
 
       <button onClick={handleNavigateToHealthStats}>Go to Health Stats</button>
+      
 
       {/* <button onClick={handleSaveNote}>Save Note</button> */}
     </div>
