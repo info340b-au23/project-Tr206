@@ -31,50 +31,6 @@ export const BloodGlucoseChart = () => {
   const xMin = 0;
   const xMax = 24; // Assuming 24 hours
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const snapshot = await onValue(healthDataRef); // healthDataRef needs to be defined or imported
-        const healthData = snapshot.val();
-
-        if (healthData) {
-          const updatedData = {
-            bloodGlucose: healthData.bloodGlucose || [],
-            systolicPressure: healthData.systolicPressure || [],
-            diastolicPressure: healthData.diastolicPressure || [],
-            heartRate: healthData.heartRate || [],
-          };
-
-          updatedData.bloodGlucose = updatedData.bloodGlucose.map(({ timestamp, value }) => ({
-            x: timestamp,
-            y: value,
-          }));
-
-          setChartData(updatedData);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-  
-      // Update the state with the input values
-      await updateBloodGlucose(bloodGlucose);
-      await updateSystolicPressure(systolicPressure);
-      await updateDiastolicPressure(diastolicPressure);
-      await updateHeartRate(heartRate);
-  
-      // Clear the input fields after submission
-      setBloodGlucose('');
-      setSystolicPressure('');
-      setDiastolicPressure('');
-      setHeartRate('');
-    };
-    fetchData();
-  }, []);
-
-
   const updateBloodGlucose = async (newBloodGlucoseValue) => {
     const dataRef = ref(healthDataRef.child('bloodGlucose'));
     const newEntryRef = push(dataRef);
@@ -120,33 +76,91 @@ export const BloodGlucoseChart = () => {
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Update the state with the input values
+    await updateBloodGlucose(bloodGlucose);
+    await updateSystolicPressure(systolicPressure);
+    await updateDiastolicPressure(diastolicPressure);
+    await updateHeartRate(heartRate);
+
+    // Clear the input fields after submission
+    setBloodGlucose('');
+    setSystolicPressure('');
+    setDiastolicPressure('');
+    setHeartRate('');
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const snapshot = await onValue(healthDataRef);
+        const healthData = snapshot.val();
+
+        if (healthData) {
+          const updatedData = {
+            bloodGlucose: healthData.bloodGlucose || [],
+            systolicPressure: healthData.systolicPressure || [],
+            diastolicPressure: healthData.diastolicPressure || [],
+            heartRate: healthData.heartRate || [],
+          };
+
+          updatedData.bloodGlucose = updatedData.bloodGlucose.map(({ timestamp, value }) => ({
+            x: timestamp,
+            y: value,
+          }));
+
+          // Update the state with fetched data
+          setChartData(updatedData);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData(); // Call the fetchData function when the component mounts
+  }, []);
+
   return (
     <div>
       <h2 style={{ textAlign: 'center' }}>Your Health Metrics Over 24 Hours</h2>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        {/* Blood Glucose Chart */}
-        <div style={chartStyle}>
-          <h3 style={{ textAlign: 'center' }}>Blood Glucose Level</h3>
-          {chartData.bloodGlucose.length > 0 ? (
-            <FlexibleXYPlot
-              height={400}
-              width={600}
-              xType="linear"
-              xDomain={[xMin, xMax]}
-              yType="linear"
-              yDomain={[0, 35]}
-              margin={{ top: 40, right: 10, left: 40, bottom: 40 }}
-            >
-              <VerticalGridLines />
-              <HorizontalGridLines />
-              <XAxis title="Time (h)" />
-              <YAxis title="Blood Glucose (mmol/h)" />
-              <LineMarkSeries data={chartData.bloodGlucose} />
-            </FlexibleXYPlot>
-          ) : (
-            <p>No blood glucose data available</p>
-          )}
-        </div>
+
+      {/* Blood Glucose Chart */}
+      <div style={chartStyle}>
+        <h3 style={{ textAlign: 'center' }}>Blood Glucose Level</h3>
+        {chartData.bloodGlucose.length > 0 ? (
+          <FlexibleXYPlot
+            height={400}
+            width={600}
+            xType="linear"
+            xDomain={[xMin, xMax]}
+            yType="linear"
+            yDomain={[0, 35]}
+            margin={{ top: 40, right: 10, left: 40, bottom: 40 }}
+          >
+            {/* Chart code here using chartData.bloodGlucose */}
+            <LineMarkSeries data={chartData.bloodGlucose} />
+            <VerticalGridLines />
+            <HorizontalGridLines />
+            <XAxis title="Time (h)" />
+            <YAxis title="Blood Glucose (mmol/h)" />
+          </FlexibleXYPlot>
+        ) : (
+          <p>No blood glucose data available</p>
+        )}
+      </div>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Blood Glucose Level:
+          <input
+            type="number"
+            value={bloodGlucose}
+            onChange={(e) => setBloodGlucose(e.target.value)}
+          />
+        </label>
+        <button type="submit">Submit Blood Glucose</button>
+      </form>
 
         {/* Systolic Pressure Chart */}
         <div style={chartStyle}>
@@ -171,6 +185,17 @@ export const BloodGlucoseChart = () => {
             <p>No systolic pressure data available</p>
           )}
         </div>
+        <form onSubmit={handleSubmit}>
+        <label>
+          Systolic Pressure:
+          <input
+            type="number"
+            value={systolicPressure}
+            onChange={(e) => setSystolicPressure(e.target.value)}
+          />
+        </label>
+        <button type="submit">Submit Systolic Pressure</button>
+      </form>
 
         {/* Diastolic Pressure Chart */}
         <div style={chartStyle}>
@@ -195,6 +220,17 @@ export const BloodGlucoseChart = () => {
             <p>No diastolic pressure data available</p>
           )}
         </div>
+        <form onSubmit={handleSubmit}>
+        <label>
+          Diastolic Pressure:
+          <input
+            type="number"
+            value={diastolicPressure}
+            onChange={(e) => setDiastolicPressure(e.target.value)}
+          />
+        </label>
+        <button type="submit">Submit Diastolic Pressure</button>
+      </form>
 
         {/* Heart Rate Chart */}
         <div style={chartStyle}>
@@ -219,7 +255,17 @@ export const BloodGlucoseChart = () => {
             <p>No heart rate data available</p>
           )}
         </div>
-      </div>
+        <form onSubmit={handleSubmit}>
+        <label>
+          Heart Rate:
+          <input
+            type="number"
+            value={heartRate}
+            onChange={(e) => setHeartRate(e.target.value)}
+          />
+        </label>
+        <button type="submit">Submit Heart Rate</button>
+      </form>
     </div>
   );
 };

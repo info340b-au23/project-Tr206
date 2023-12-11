@@ -305,6 +305,16 @@ footer p:last-child {
     margin: 8px 0;
   }
 
+#previousEntries {
+    display:flex;
+    flex-direction: column-reverse;
+    text-align: left;
+}
+
+h3.previous-entries-header {
+    text-align: left; 
+}
+
 @media (min-width: 992px) {
     .card-body {
         margin: 0 auto;
