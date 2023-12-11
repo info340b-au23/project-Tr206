@@ -69,12 +69,18 @@ export function DiaryPage() {
       <div>
         <h3 className="previous-entries-header">Previous Entries</h3>
         <ul id="previousEntries">
-          {previousEntries.map((entry, index) => (
-            <li key={index}>
-              <p>Date: {entry.date}</p>
-              <p>Entry: {entry.note}</p>
-            </li>
-          ))}
+          {previousEntries.map((entry, index) => {
+            // Check if both date and note exist and are not empty strings
+            if (entry.date && entry.note && entry.date.trim() !== '' && entry.note.trim() !== '') {
+              return (
+                <li key={index}>
+                  <p>Date: {entry.date}</p>
+                  <p>Entry: {entry.note}</p>
+                </li>
+              );
+            }
+            return null; // Skip rendering incomplete entries
+          })}
         </ul>
       </div>
     );
