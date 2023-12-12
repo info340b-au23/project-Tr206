@@ -1,1 +1,5 @@
-{}
+{
+    "projects": {
+      "default": "diabetic-health-tracker"
+    }
+}
