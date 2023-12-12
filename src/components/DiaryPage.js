@@ -58,8 +58,12 @@ export function DiaryPage() {
         <label htmlFor="currentNote">Describe your symptoms here:</label>
         <textarea rows="4" cols="50" id="currentNote" value={currentNote} onChange={handleNoteChange}></textarea>
         
-        <button onClick={handleSaveEntry}>Save Entry</button>
-        <button onClick={handleGoToHealthStats}>Go to Health Stats</button>
+        <button onClick={handleSaveEntry} aria-label="Save Entry">
+        Save Entry
+        </button>
+        <button onClick={handleGoToHealthStats} aria-label="Go to Health Stats">
+        Go to Health Stats
+        </button>
       </div>
     );
   };
@@ -69,12 +73,18 @@ export function DiaryPage() {
       <div>
         <h3 className="previous-entries-header">Previous Entries</h3>
         <ul id="previousEntries">
-          {previousEntries.map((entry, index) => (
-            <li key={index}>
-              <p>Date: {entry.date}</p>
-              <p>Entry: {entry.note}</p>
-            </li>
-          ))}
+          {previousEntries.map((entry, index) => {
+            // Check if both date and note exist and are not empty strings
+            if (entry.date && entry.note && entry.date.trim() !== '' && entry.note.trim() !== '') {
+              return (
+                <li key={index}>
+                  <p>Date: {entry.date}</p>
+                  <p>Entry: {entry.note}</p>
+                </li>
+              );
+            }
+            return null; // Skip rendering incomplete entries
+          })}
         </ul>
       </div>
     );
@@ -111,6 +121,5 @@ export function DiaryPage() {
     </div>
   );
 }
-
 
 

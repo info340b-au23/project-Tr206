@@ -1,3 +1,4 @@
+
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref } from 'firebase/database';
 
@@ -7,7 +8,12 @@ const firebaseConfig = {
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
-const db = getDatabase(firebaseApp);
-const healthDataRef = ref(db, 'healthData'); 
+const database = getDatabase(firebaseApp);
 
-export { firebaseApp, db, healthDataRef };
+// Reference to the root of database
+const rootRef = ref(database);
+
+// Reference to the 'healthData' node in database
+const healthDataRef = ref(rootRef, 'healthData');
+
+export { healthDataRef, firebaseApp };
