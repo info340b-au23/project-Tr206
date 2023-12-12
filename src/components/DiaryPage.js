@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ref, getDatabase, push as firebasePush, onValue } from 'firebase/database';
 import { Navigation } from './Navigation';
-import { firebaseApp } from '../firebase/FirebaseConfig';
-
+import { firebaseApp } from '../index';
 
 export function DiaryPage() {
   const [currentDate, setCurrentDate] = useState('');
