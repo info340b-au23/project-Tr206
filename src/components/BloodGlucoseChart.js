@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   FlexibleXYPlot,
   LineMarkSeries,
@@ -7,6 +8,7 @@ import {
   VerticalGridLines,
   HorizontalGridLines,
 } from 'react-vis';
+
 
 const chartStyle = {
   marginBottom: '20px',
