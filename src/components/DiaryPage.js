@@ -1,93 +1,119 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ref, getDatabase, push as firebasePush, onValue } from 'firebase/database';
 import { Navigation } from './Navigation';
-import { ref, push, getDatabase } from 'firebase/database';
+import { firebaseApp } from '../index';
 
 export function DiaryPage() {
   const [currentDate, setCurrentDate] = useState('');
   const [currentNote, setCurrentNote] = useState('');
-  const [bloodGlucose, setBloodGlucose] = useState('');
-  const [systolicPressure, setSystolicPressure] = useState('');
-  const [diastolicPressure, setDiastolicPressure] = useState('');
-  const [heartRate, setHeartRate] = useState('');
+  const [previousEntries, setPreviousEntries] = useState([]);
   const navigate = useNavigate();
 
-  // Handle the input field changes
+  useEffect(() => {
+    const db = getDatabase(firebaseApp);
+    const notesRef = ref(db, 'notes');
+
+    onValue(notesRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const entries = Object.values(data);
+        setPreviousEntries(entries);
+      }
+    });
+  }, []);
+
   const handleDateChange = (event) => setCurrentDate(event.target.value);
   const handleNoteChange = (event) => setCurrentNote(event.target.value);
-  const handleBloodGlucoseChange = (event) => setBloodGlucose(event.target.value);
-  const handleSystolicPressureChange = (event) => setSystolicPressure(event.target.value);
-  const handleDiastolicPressureChange = (event) => setDiastolicPressure(event.target.value);
-  const handleHeartRateChange = (event) => setHeartRate(event.target.value);
 
-  // Function to handle the submission of the health data
-  const handleSaveHealthData = () => {
-    const db = getDatabase();
-    const healthDataRef = ref(db, 'healthData');
+  const handleSaveEntry = () => {
+    const db = getDatabase(firebaseApp);
+    const notesRef = ref(db, 'notes');
 
-    // Convert date string to a proper timestamp
-    const timeStamp = currentDate ? new Date(currentDate).toISOString() : '';
-
-    // Construct the health data entry
-    const healthDataEntry = {
-      TimeStamp: timeStamp,
-      bloodGlucose: parseFloat(bloodGlucose),
-      systolicPressure: parseFloat(systolicPressure),
-      diastolicPressure: parseFloat(diastolicPressure),
-      heartRate: parseFloat(heartRate),
-      note: currentNote
+    const noteEntry = {
+      note: currentNote,
+      date: currentDate,
     };
 
-    // Push the health data entry to Firebase
-    push(healthDataRef, healthDataEntry)
+    firebasePush(notesRef, noteEntry)
       .then(() => {
-        setCurrentNote('');
-        setBloodGlucose('');
-        setSystolicPressure('');
-        setDiastolicPressure('');
-        setHeartRate('');
-        navigate('/healthstats');
+        setCurrentNote(''); // Clear the note field after saving
       })
       .catch((error) => {
-        console.error("Error writing to database", error);
+        console.error('Error writing to database', error);
       });
   };
 
-  // JSX for the component
+  const handleGoToHealthStats = () => {
+    navigate('/healthstats');
+  };
+
+  const renderDiaryEntry = () => {
+    return (
+      <div className="diary-entry">
+        <label htmlFor="currentDate">Select Today's Date:</label>
+        <input type="date" id="currentDate" value={currentDate} onChange={handleDateChange} required />
+
+        <label htmlFor="currentNote">Describe your symptoms here:</label>
+        <textarea rows="4" cols="50" id="currentNote" value={currentNote} onChange={handleNoteChange}></textarea>
+        
+        <button onClick={handleSaveEntry} aria-label="Save Entry">
+        Save Entry
+        </button>
+        <button onClick={handleGoToHealthStats} aria-label="Go to Health Stats">
+        Go to Health Stats
+        </button>
+      </div>
+    );
+  };
+
+  const renderPreviousEntries = () => {
+    return (
+      <div>
+        <h3 className="previous-entries-header">Previous Entries</h3>
+        <ul id="previousEntries">
+          {previousEntries.map((entry, index) => {
+            // Check if both date and note exist and are not empty strings
+            if (entry.date && entry.note && entry.date.trim() !== '' && entry.note.trim() !== '') {
+              return (
+                <li key={index}>
+                  <p>Date: {entry.date}</p>
+                  <p>Entry: {entry.note}</p>
+                </li>
+              );
+            }
+            return null; // Skip rendering incomplete entries
+          })}
+        </ul>
+      </div>
+    );
+  };
+
   return (
     <div>
       <Navigation />
+      <nav>
+        <ul>
+          <li><Link to="/"><img src="img/home.png" alt="Home Icon" />Home</Link></li>
+          <li><Link to="/HealthStats"><img src="img/quiz.png" alt="Quiz Icon" />Health Tracker</Link></li>
+          <li><Link to="/FindLocation"><img src="img/location.png" alt="Location Icon" />Find a Location</Link></li>
+          <li><Link to="/DiaryPage"><img src="img/diary.png" alt="Diary Icon" />Diary</Link></li>
+          <li><Link to="/Profile"><img src="img/profile.png" alt="Profile Icon" />Profile</Link></li>
+        </ul>
+      </nav>
       <div id="diary-header">
+        <img src="img/diary-icon.png" alt="Diary Icon" className="diary-img"/>
         <h2>Diary</h2>
       </div>
       <div>
         <h3 className="diary-description">Record your health notes and symptoms in the diary.</h3>
       </div>
-      <div className="diary-entry">
-        <label htmlFor="currentDate">Date:</label>
-        <input type="date" id="currentDate" value={currentDate} onChange={handleDateChange} required />
-
-        <label htmlFor="currentNote">Note:</label>
-        <textarea id="currentNote" value={currentNote} onChange={handleNoteChange} />
-
-        <label htmlFor="bloodGlucose">Blood Glucose (mmol/L):</label>
-        <input type="number" id="bloodGlucose" value={bloodGlucose} onChange={handleBloodGlucoseChange} />
-
-        <label htmlFor="systolicPressure">Systolic Pressure (mmHg):</label>
-        <input type="number" id="systolicPressure" value={systolicPressure} onChange={handleSystolicPressureChange} />
-
-        <label htmlFor="diastolicPressure">Diastolic Pressure (mmHg):</label>
-        <input type="number" id="diastolicPressure" value={diastolicPressure} onChange={handleDiastolicPressureChange} />
-
-        <label htmlFor="heartRate">Heart Rate (bpm):</label>
-        <input type="number" id="heartRate" value={heartRate} onChange={handleHeartRateChange} />
-
-        <button onClick={handleSaveHealthData}>Submit</button>
-      </div>
+      {renderDiaryEntry()}
+      {renderPreviousEntries()}
       <footer className="fixed-bottom">
         <div className="container">
-          <p><a href="mailto:healthchecker@gmail.com">healthchecker@gmail.com</a></p>
-          <p><a href="tel:555-123-4567">555-123-4567</a></p>
+          <p><a href="mailto:healthchecker@gmail.com"><span className="material-icons">email</span>healthchecker@gmail.com</a></p>
+          <p><a href="tel:555-123-4567"><span className="material-icons">phone</span> 555-123-4567</a></p>
           <p>&copy; Diabetic Health Checker 2023</p>
         </div>
       </footer>
@@ -95,4 +121,3 @@ export function DiaryPage() {
   );
 }
 
-export default DiaryPage;

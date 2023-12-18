@@ -1,24 +1,25 @@
-import React, { useEffect, useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
+import { getDatabase, ref, onValue } from 'firebase/database';
+import { BloodGlucoseChart } from './BloodGlucoseChart';
 import { Navigation } from './Navigation';
-import BloodGlucoseChart from './BloodGlucoseChart';
-import { ref, onValue, getDatabase } from 'firebase/database';
 
 function Header() {
   return (
     <header>
       <div className='container'>
-        <h1>Your Health Statistics</h1>
+        <h1>Your Health Tracker</h1>
       </div>
     </header>
   );
 }
 
-function Footer() {
+function PageFooter() {
   return (
     <footer className="fixed-bottom">
       <div className="container">
-        <p><a href="mailto:healthchecker@gmail.com"><span className="material-icons">email</span>healthchecker@gmail.com</a></p>
-        <p><a href="tel:555-123-4567"><span className="material-icons">phone</span> 555-123-4567</a></p>
+        <p><a href="mailto:healthchecker@gmail.com">healthchecker@gmail.com</a></p>
+        <p><a href="tel:555-123-4567">555-123-4567</a></p>
         <p>&copy; Diabetic Health Checker 2023</p>
       </div>
     </footer>
@@ -26,7 +27,7 @@ function Footer() {
 }
 
 export function HealthStats() {
-  const [healthData, setHealthData] = useState({
+  const [chartData, setChartData] = useState({
     bloodGlucose: [],
     systolicPressure: [],
     diastolicPressure: [],
@@ -36,29 +37,40 @@ export function HealthStats() {
   useEffect(() => {
     const db = getDatabase();
     const healthDataRef = ref(db, 'healthData');
+    
+    onValue(healthDataRef, (snapshot) => {
+      const data = snapshot.val();
 
-    const fetchData = () => {
-      onValue(healthDataRef, (snapshot) => {
-        const data = snapshot.val();
-        const formattedData = {
-          bloodGlucose: data.bloodGlucose ? [{ x: new Date(data.bloodGlucose.TimeStamp), y: data.bloodGlucose.newBloodGlucoseValue }] : [],
-          systolicPressure: data.systolicPressure ? [{ x: new Date(data.systolicPressure.TimeStamp), y: data.systolicPressure.newSystolicPressureValue }] : [],
-          diastolicPressure: data.diastolicPressure ? [{ x: new Date(data.diastolicPressure.TimeStamp), y: data.diastolicPressure.newDiastolicPressureValue }] : [],
-          heartRate: data.heartRate ? [{ x: new Date(data.heartRate.TimeStamp), y: data.heartRate.newHeartRateValue }] : [],
-        };
-        setHealthData(formattedData);
-      });
-    };
 
-    fetchData();
+      const formattedData = {
+        bloodGlucose: Object.values(data.bloodGlucose || {}).map(entry => ({
+          x: new Date(entry.timestamp),
+          y: entry.value
+        })),
+        systolicPressure: Object.values(data.systolicPressure || {}).map(entry => ({
+          x: new Date(entry.timestamp),
+          y: entry.value
+        })),
+        diastolicPressure: Object.values(data.diastolicPressure || {}).map(entry => ({
+          x: new Date(entry.timestamp),
+          y: entry.value
+        })),
+        heartRate: Object.values(data.heartRate || {}).map(entry => ({
+          x: new Date(entry.timestamp),
+          y: entry.value
+        })),
+      };
+
+      setChartData(formattedData);
+    });
   }, []);
 
   return (
     <div>
       <Navigation />
       <Header />
-      <BloodGlucoseChart healthData={healthData} />
-      <Footer />
+      <BloodGlucoseChart chartData={chartData} />
+      <PageFooter />
     </div>
   );
 }
