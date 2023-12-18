@@ -6,7 +6,7 @@ import { Profile } from './Profile';
 import { DiaryPage } from './DiaryPage';
 import { FindLocation } from './FindLocation';
 import { HealthStats } from './HealthStats';
-import { BloodGlucoseChart } from './BloodGlucoseChart';
+import BloodGlucoseChart from './BloodGlucoseChart';
 
 function App() {
   return (
