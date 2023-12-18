@@ -16,8 +16,7 @@ const formatXAxis = (tick) => {
   const date = new Date(tick);
   return date.getHours();
 };
-const xMin = 0;
-const xMax = 24;
+
 export const BloodGlucoseChart = ({ chartData }) => {
   return (
     <div>
