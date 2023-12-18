@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ref, getDatabase, push as firebasePush, onValue } from 'firebase/database';
+import { ref, getDatabase, child, onValue, push, update } from 'firebase/database';
 import { Navigation } from './Navigation';
 import { firebaseApp } from '../index';
 
 export function DiaryPage() {
-  const [currentDate, setCurrentDate] = useState('');
+  // const [currentDate, setCurrentDate] = useState('');
   const [currentNote, setCurrentNote] = useState('');
+  const [bloodGlucose, setBloodGlucose] = useState('');
+  const [systolicPressure, setSystolicPressure] = useState('');
+  const [diastolicPressure, setDiastolicPressure] = useState('');
+  const [heartRate, setHeartRate] = useState('');
   const [previousEntries, setPreviousEntries] = useState([]);
   const navigate = useNavigate();
+  const [hour, setHour] = useState(''); 
 
   useEffect(() => {
     const db = getDatabase(firebaseApp);
@@ -23,46 +28,137 @@ export function DiaryPage() {
     });
   }, []);
 
-  const handleDateChange = (event) => setCurrentDate(event.target.value);
+  // const handleDateChange = (event) => setCurrentDate(event.target.value);
   const handleNoteChange = (event) => setCurrentNote(event.target.value);
+  const handleHeartRateChange = (event) => setHeartRate(event.target.value);
+  const handleBloodGlucoseChange = (event) => setBloodGlucose(event.target.value);
+  const handleSystolicPressureChange = (event) => setSystolicPressure(event.target.value);
+  const handleDiastolicPressureChange = (event) => setDiastolicPressure(event.target.value);
+  const handleHourChange = (event) => setHour(event.target.value);
 
-  const handleSaveEntry = () => {
+  const handleNavigateToHealthStats = () => {
     const db = getDatabase(firebaseApp);
-    const notesRef = ref(db, 'notes');
+    // const notesRef = ref(db, 'notes');
+    // const indicatorsRef = ref(db, 'indicators');
+    const timeStamp = new Date();
+    timeStamp.setHours(hour, 0, 0, 0);
 
-    const noteEntry = {
-      note: currentNote,
-      date: currentDate,
-    };
+    // const noteEntry = {
+    //   note: currentNote,
+    //   date: currentDate,
+    // };
 
-    firebasePush(notesRef, noteEntry)
-      .then(() => {
-        setCurrentNote(''); // Clear the note field after saving
-      })
-      .catch((error) => {
-        console.error('Error writing to database', error);
-      });
-  };
+    // const indicatorsEntry = {
+    //   bloodGlucose,
+    //   systolicPressure,
+    //   diastolicPressure,
+    //   heartRate,
+    //   date: currentDate,
+    // };
 
-  const handleGoToHealthStats = () => {
-    navigate('/healthstats');
-  };
+    const BG = {
+        TimeStamp: timeStamp.toISOString(),
+        newBloodGlocoseValue: parseFloat(bloodGlucose)
+    }
+
+     // Get a key for a new Post.
+    const newPostKey = push(child(ref(db), 'healthData/bloodGlocose')).key;
+
+
+    // Write the new post's data simultaneously in the posts list and the user's post list.
+    const updates = {};
+    updates['/healthData/bloodGlucose/' + newPostKey] = BG;
+
+    update(ref(db),updates)
+
+    const SP = {
+      TimeStamp: timeStamp.toISOString(),
+      newBloodGlocoseValue: parseFloat(systolicPressure)
+    }
+
+    // Get a key for a new Post.
+    const newPostKey2 = push(child(ref(db), 'healthData/systolicPressure')).key;
+
+
+    // Write the new post's data simultaneously in the posts list and the user's post list.
+    const updates2 = {};
+    updates2['/healthData/systolicPressure/' + newPostKey2] = SP;
+
+    update(ref(db),updates2)
+
+
+    const DP = {
+      TimeStamp: timeStamp.toISOString(),
+      newBloodGlocoseValue: parseFloat(diastolicPressure)
+    }
+
+    // Get a key for a new Post.
+    const newPostKey3 = push(child(ref(db), 'healthData/diastolicPressure')).key;
+
+    update(ref(db),updates2)
+    // Write the new post's data simultaneously in the posts list and the user's post list.
+    const updates3 = {};
+    updates3['/healthData/diastolicPressure/' + newPostKey3] = DP;
+
+
+    const HR = {
+      TimeStamp: timeStamp.toISOString(),
+      newBloodGlocoseValue: parseFloat(heartRate)
+    }
+    update(ref(db),updates2)
+    // Get a key for a new Post.
+    const newPostKey4 = push(child(ref(db), 'healthData/heartRate')).key;
+
+
+    // Write the new post's data simultaneously in the posts list and the user's post list.
+    const updates4 = {};
+    updates4['/healthData/heartRate/' + newPostKey4] = HR;
+
+    update(ref(db),updates4)
+    
+        .then(() => {
+          setCurrentNote(''); // Clear the note field after saving
+        })
+        .then(() => {
+            navigate('/healthstats', {
+                state: {
+                    bloodGlucose,
+                    systolicPressure,
+                    diastolicPressure,
+                    heartRate,
+                },
+            });
+        })
+        .catch((error) => {
+            console.error("Error writing to database", error);
+        });
+   };
+
 
   const renderDiaryEntry = () => {
     return (
       <div className="diary-entry">
-        <label htmlFor="currentDate">Select Today's Date:</label>
-        <input type="date" id="currentDate" value={currentDate} onChange={handleDateChange} required />
+        {/* <label htmlFor="currentDate">Select Today's Date:</label>
+        <input type="date" id="currentDate" value={currentDate} onChange={handleDateChange} required /> */}
+        <label htmlFor="hour">Hour of the Day (0-23.59):</label>
+        <input type="number" id="hour" value={hour} min="0" max="23.59" onChange={handleHourChange} required/>
 
         <label htmlFor="currentNote">Describe your symptoms here:</label>
         <textarea rows="4" cols="50" id="currentNote" value={currentNote} onChange={handleNoteChange}></textarea>
         
-        <button onClick={handleSaveEntry} aria-label="Save Entry">
-        Save Entry
-        </button>
-        <button onClick={handleGoToHealthStats} aria-label="Go to Health Stats">
-        Go to Health Stats
-        </button>
+        <label htmlFor="bloodGlucose">Blood Glucose Level (mmol/h):</label>
+        <input type="number" id="bloodGlucose" value={bloodGlucose} onChange={handleBloodGlucoseChange} required/>
+
+        <label htmlFor="systolicPressure">Systolic Blood Pressure (mmHg):</label>
+        <input type="number" id="systolicPressure" value={systolicPressure} onChange={handleSystolicPressureChange} required/>
+
+        <label htmlFor="diastolicPressure">Diastolic Blood Pressure (mmHg):</label>
+        <input type="number" id="diastolicPressure" value={diastolicPressure} onChange={handleDiastolicPressureChange} required/>
+
+        <label htmlFor="heartRate">Heart Rate (BPM):</label>
+        <input type="number" id="heartRate" value={heartRate} onChange={handleHeartRateChange} required/>
+        <button onClick={handleNavigateToHealthStats}>Go to Health Stats</button>
+
       </div>
     );
   };

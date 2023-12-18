@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
   FlexibleXYPlot,
   LineMarkSeries,
@@ -9,15 +8,20 @@ import {
   HorizontalGridLines,
 } from 'react-vis';
 
-
 const chartStyle = {
   marginBottom: '20px',
 };
 
+const formatXAxis = (tick) => {
+  const date = new Date(tick);
+  return date.getHours();
+};
+const xMin = 0;
+const xMax = 24;
 export const BloodGlucoseChart = ({ chartData }) => {
   return (
     <div>
-      <h2 style={{ textAlign: 'center' }}>Your Health Metrics Over 24 Hours</h2>
+      <h2 style={{ textAlign: 'center' }}>Your Health Metrics Over One Day</h2>
 
       {/* Blood Glucose Chart */}
       <div style={chartStyle}>
@@ -25,13 +29,17 @@ export const BloodGlucoseChart = ({ chartData }) => {
         <FlexibleXYPlot
           height={300}
           width={400}
-          xType="time"
+          xType="linear"
           margin={{ left: 50 }}
+          xDomain={[new Date().setHours(0,0,0,0), new Date().setHours(23, 59, 59, 999)]}
+          yType='linear'
+          yDomain={[0, 35]}
         >
           <VerticalGridLines />
           <HorizontalGridLines />
-          <XAxis title="Time" />
-          <YAxis title="Blood Glucose (mmol/L)" />
+          <XAxis title="Time (Hours)" tickFormat={formatXAxis} />
+          <YAxis title="Blood Glucose (mmol/h)" />
+          {/* render whenn data*/}
           <LineMarkSeries data={chartData.bloodGlucose} />
         </FlexibleXYPlot>
       </div>
@@ -42,12 +50,15 @@ export const BloodGlucoseChart = ({ chartData }) => {
         <FlexibleXYPlot
           height={300}
           width={400}
-          xType="time"
+          xType="linear"
           margin={{ left: 50 }}
+          xDomain={[new Date().setHours(0,0,0,0), new Date().setHours(23, 59, 59, 999)]}
+          yType='linear'
+          yDomain={[0, 200]}
         >
           <VerticalGridLines />
           <HorizontalGridLines />
-          <XAxis title="Time" />
+          <XAxis title="Time (Hours)" tickFormat={formatXAxis} />
           <YAxis title="Systolic Pressure (mmHg)" />
           <LineMarkSeries data={chartData.systolicPressure} />
         </FlexibleXYPlot>
@@ -59,12 +70,15 @@ export const BloodGlucoseChart = ({ chartData }) => {
         <FlexibleXYPlot
           height={300}
           width={400}
-          xType="time"
+          xType="linear"
           margin={{ left: 50 }}
+          xDomain={[new Date().setHours(0,0,0,0), new Date().setHours(23, 59, 59, 999)]}
+          yType='linear'
+          yDomain={[0, 200]}
         >
           <VerticalGridLines />
           <HorizontalGridLines />
-          <XAxis title="Time" />
+          <XAxis title="Time (Hours)" tickFormat={formatXAxis} />
           <YAxis title="Diastolic Pressure (mmHg)" />
           <LineMarkSeries data={chartData.diastolicPressure} />
         </FlexibleXYPlot>
@@ -76,12 +90,15 @@ export const BloodGlucoseChart = ({ chartData }) => {
         <FlexibleXYPlot
           height={300}
           width={400}
-          xType="time"
+          xType="linear"
           margin={{ left: 50 }}
+          xDomain={[new Date().setHours(0,0,0,0), new Date().setHours(23, 59, 59, 999)]}
+          yType='linear'
+          yDomain={[0, 140]}
         >
           <VerticalGridLines />
           <HorizontalGridLines />
-          <XAxis title="Time" />
+          <XAxis title="Time (Hours)" tickFormat={formatXAxis} />
           <YAxis title="Heart Rate (bpm)" />
           <LineMarkSeries data={chartData.heartRate} />
         </FlexibleXYPlot>
