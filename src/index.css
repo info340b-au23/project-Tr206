@@ -8,6 +8,8 @@ body {
     text-align: center;
     background-color: white;
     color: black;
+
+    margin:0 !important;
 }
 
 #header {
@@ -185,8 +187,7 @@ header {
 }
 
 footer {
-    position: relative;
-    bottom: 0;
+
     width: 100%;
     background-color: #59745D;
     color: white;

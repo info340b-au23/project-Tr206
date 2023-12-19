@@ -18,6 +18,7 @@ const formatXAxis = (tick) => {
 };
 
 export const BloodGlucoseChart = ({ chartData }) => {
+  console.log(chartData.diastolicPressure)
   return (
     <div>
       <h2 style={{ textAlign: 'center' }}>Your Health Metrics Over One Day</h2>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import 'react-vis/dist/style.css';
 import { MainPage } from './MainPage';
 import { Profile } from './Profile';
@@ -12,7 +12,9 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<MainPage />} />
+        <Route path="/" element={<Navigate to="main" />} />
+        <Route path="*" element={<Navigate to="main" />} />
+        <Route path="/main" element={<MainPage />} />
         <Route path="/Profile" element={<Profile />} />
         <Route path="/DiaryPage" element={<DiaryPage />} />
         <Route path="/FindLocation" element={<FindLocation />} /> {/* Route for FindLocation */}

@@ -58,62 +58,50 @@ export function DiaryPage() {
 
     const BG = {
         TimeStamp: timeStamp.toISOString(),
-        newBloodGlocoseValue: parseFloat(bloodGlucose)
+        newBloodGlucoseValue: parseFloat(bloodGlucose)
     }
-
      // Get a key for a new Post.
     const newPostKey = push(child(ref(db), 'healthData/bloodGlocose')).key;
-
-
     // Write the new post's data simultaneously in the posts list and the user's post list.
     const updates = {};
     updates['/healthData/bloodGlucose/' + newPostKey] = BG;
-
     update(ref(db),updates)
+
 
     const SP = {
       TimeStamp: timeStamp.toISOString(),
-      newBloodGlocoseValue: parseFloat(systolicPressure)
+      newSystolicPressureValue: parseFloat(systolicPressure)
     }
-
     // Get a key for a new Post.
     const newPostKey2 = push(child(ref(db), 'healthData/systolicPressure')).key;
-
-
     // Write the new post's data simultaneously in the posts list and the user's post list.
     const updates2 = {};
     updates2['/healthData/systolicPressure/' + newPostKey2] = SP;
-
     update(ref(db),updates2)
 
 
     const DP = {
       TimeStamp: timeStamp.toISOString(),
-      newBloodGlocoseValue: parseFloat(diastolicPressure)
+      newDiastolicPressureValue: parseFloat(diastolicPressure)
     }
 
     // Get a key for a new Post.
     const newPostKey3 = push(child(ref(db), 'healthData/diastolicPressure')).key;
-
-    update(ref(db),updates2)
-    // Write the new post's data simultaneously in the posts list and the user's post list.
     const updates3 = {};
     updates3['/healthData/diastolicPressure/' + newPostKey3] = DP;
+    update(ref(db),updates3)
 
+    // Write the new post's data simultaneously in the posts list and the user's post list.
 
     const HR = {
       TimeStamp: timeStamp.toISOString(),
-      newBloodGlocoseValue: parseFloat(heartRate)
+      newHeartRateValue: parseFloat(heartRate)
     }
-    update(ref(db),updates2)
     // Get a key for a new Post.
     const newPostKey4 = push(child(ref(db), 'healthData/heartRate')).key;
-
-
     // Write the new post's data simultaneously in the posts list and the user's post list.
     const updates4 = {};
     updates4['/healthData/heartRate/' + newPostKey4] = HR;
-
     update(ref(db),updates4)
     
         .then(() => {
@@ -197,7 +185,8 @@ export function DiaryPage() {
           <li><Link to="/Profile"><img src="img/profile.png" alt="Profile Icon" />Profile</Link></li>
         </ul>
       </nav>
-      <div id="diary-header">
+      <div className='main'>
+         <div id="diary-header">
         <img src="img/diary-icon.png" alt="Diary Icon" className="diary-img"/>
         <h2>Diary</h2>
       </div>
@@ -206,6 +195,8 @@ export function DiaryPage() {
       </div>
       {renderDiaryEntry()}
       {renderPreviousEntries()}
+      </div>
+     
       <footer className="fixed-bottom">
         <div className="container">
           <p><a href="mailto:healthchecker@gmail.com"><span className="material-icons">email</span>healthchecker@gmail.com</a></p>

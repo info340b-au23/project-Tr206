@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getDatabase, ref, onValue } from 'firebase/database';
+import { getDatabase, ref, onValue, remove } from 'firebase/database';
 import { BloodGlucoseChart } from './BloodGlucoseChart';
 import { Navigation } from './Navigation';
 
@@ -33,12 +33,15 @@ export function HealthStats() {
     heartRate: [],
   });
 
+  const [click,setclick] = useState(0)
   useEffect(() => {
     const db = getDatabase();
     const healthDataRef = ref(db, 'healthData');
 
     onValue(healthDataRef, (snapshot) => {
       const data = snapshot.val();
+      if(data !== null){
+        console.log(data.diastolicPressure)
       const formattedData = {
         bloodGlucose: Object.values(data.bloodGlucose || {}).map(entry => ({
           x: new Date(entry.TimeStamp),
@@ -58,15 +61,28 @@ export function HealthStats() {
         })),
       };
       setChartData(formattedData);
+      }
+ 
     });
-  }, []);
+  }, [click]);
+
   const clearChartData = () => {
-    setChartData({
-      bloodGlucose: [{ x: new Date(), y: null }],
-      systolicPressure: [{ x: new Date(), y: null }],
-      diastolicPressure: [{ x: new Date(), y: null }],
-      heartRate: [{ x: new Date(), y: null }],
-    });
+    // setChartData({
+    //   bloodGlucose: [{ x: new Date(), y: null }],
+    //   systolicPressure: [{ x: new Date(), y: null }],
+    //   diastolicPressure: [{ x: new Date(), y: null }],
+    //   heartRate: [{ x: new Date(), y: null }],
+    // });
+    setclick(click + 1)
+    const db = getDatabase();
+    const dbRef = ref(db, 'healthData');
+    remove(dbRef)
+    .then(()=>{
+      return window.location.reload()
+    })
+    .catch(()=>{
+      console.log(2)
+    })
   };
   
 
